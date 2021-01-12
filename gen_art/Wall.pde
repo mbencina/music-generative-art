@@ -81,11 +81,5 @@ class Wall {
     if (z >= maxZ) {
       z = startingZ;  
     }
-
-    // shifting Z away from us
-    //z -= (pow((scoreGlobal/150), 2));
-    //if (z <= startingZ) {
-    //  z = maxZ;  
-    //}
   }
 }

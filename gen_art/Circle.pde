@@ -31,12 +31,6 @@ class Circle {
     speedMultiplier = random(0.8, 1.2) * 10.0;
     this.startR = random(0.5, 2.0) * 300.0 / speedMultiplier;
     
-    //if (x > 0) {
-    //  this.rotation = PI/8;
-    //} else {
-    //  this.rotation = -PI/8;
-    //}
-    
     if (x > 0) {
       this.rotation = -PI/2;
     } else {
@@ -49,7 +43,6 @@ class Circle {
     // Color determined by low, medium and high sounds
     // Opacity determined by the overall volume
     
-    
     // First band, the one that moves according to the force
     // Transformation matrix
     pushMatrix();
@@ -57,7 +50,6 @@ class Circle {
     // Shifting
     translate(x, y, z);
 
-    //translate(0, height/2, -500);
     strokeWeight(1);
     stroke(100+scoreLow, 100+scoreMid, 100+scoreHi, ((scoreGlobal-5)/100)*(255+(z/20))*vocalTransparency);
     fill(100+scoreLow, 100+scoreMid, 100+scoreHi, ((scoreGlobal-5)/1000)*(255+(z/25))*vocalTransparency);
@@ -70,8 +62,8 @@ class Circle {
     if (y > height - startR/2.0 || y < startR/2.0) {
       direction *= -1;
     }
+    
     // Shifting Z towards us
-    //z += (pow((scoreGlobal/150), 2));
     z += scoreGlobal/150;
     if (z >= maxZ) {
       z = startingZ;  

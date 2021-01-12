@@ -9,7 +9,6 @@ class Cube {
   float rotX, rotY, rotZ;
   float sumRotX, sumRotY, sumRotZ;
   
-  // Constructor
   Cube() {
     // Make the cube appear at a random location
     x = random(0, width);

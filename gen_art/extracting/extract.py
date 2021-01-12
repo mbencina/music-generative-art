@@ -7,7 +7,7 @@ import pandas as pd
 
 
 location_name = './music/'
-file_name = 'cvet_short.wav'  # song name
+file_name = 'cvet_short.wav'  # enter your song name
 file_path = location_name + file_name
 input_length = 3.0
 input_overlap = 1.0
@@ -23,7 +23,7 @@ genre = {'pop_rock': ['rock', 'pop'],
 data, tags = extractor(file_path, model='MTT_musicnn',
                        extract_features=False, input_length=input_length, input_overlap=input_overlap)
 
-print("input_length", input_length, "input_overlap:", input_overlap, "shape:", np.shape(data))
+print("input_length", input_length, "input_overlap:", input_overlap, "shape:")
 
 df = pd.DataFrame(data=data, columns=tags)
 num_rows = len(df.index)

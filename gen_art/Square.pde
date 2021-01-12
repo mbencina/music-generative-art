@@ -46,10 +46,6 @@ class Square {
   
   void setDisplayTransparency(float val) {
     displayTransparency = val;
-    //if (val == 0.0) {
-    //  timeout = 120;
-    //  println("timeout set");
-    //}
   }
   
   float getTimeout() {
@@ -69,7 +65,6 @@ class Square {
     // Color determined by low, medium and high sounds
     // Opacity determined by the overall volume
     
-    
     // First band, the one that moves according to the force
     // Transformation matrix
     pushMatrix();
@@ -77,8 +72,6 @@ class Square {
     // Shifting
     translate(x, y, z);
 
-    //translate(0, height/2, -500);
-    // TODO tukej je ideja, da bo random band
     strokeWeight(1);
     stroke(100+scoreLow, 100+scoreMid, 100+scoreHi, ((scoreGlobal-5)/100)*(255+(z/20))*drumsTransparency*displayTransparency);
     fill(100+scoreLow, 100+scoreMid, 100+scoreHi, ((scoreGlobal-5)/1000)*(255+(z/25))*drumsTransparency*displayTransparency);
@@ -86,17 +79,7 @@ class Square {
     rect(0, 0, startR, startR);
     
     popMatrix();
-    
-    //y += direction*speedMultiplier;
-    //if (y > height - startR/2.0 || y < startR/2.0) {
-    //  direction *= -1;
-    //}
-    // Shifting Z towards us
-    //z += (pow((scoreGlobal/150), 2));
-    //z += scoreGlobal/150;
-    //if (z >= maxZ) {
-    //  z = startingZ;  
-    //}
+
     z += scoreGlobal/150;
     if (z >= maxZ) {
       z = startingZ;  

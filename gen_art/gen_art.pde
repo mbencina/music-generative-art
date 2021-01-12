@@ -1,26 +1,24 @@
 import ddf.minim.*;
 import ddf.minim.analysis.*;
-//import com.hamoid.*; // video lib
+//import com.hamoid.*; // save the video library; intstall the library & uncomment all the lines containing "video" 
 
-// new
 String CSV;
 Table t;
-
-// old 
 
 Minim minim;
 AudioPlayer song;
 FFT fft;
 
+
 //VideoExport videoExport;
 
 // Variables which define the "zones" of the spectrum
-// For example, for bass, we only take the first 4% of the total spectrum
+// For example, for bass, we only take the first 3% of the total spectrum
 float specLow = 0.03; // 3%
 float specMid = 0.125;  // 12.5%
 float specHi = 0.20;   // 20%
 
-// So 64% of the possible spectrum remains that will not be used.
+// So a lot of the possible spectrum remains that will not be used.
 // These values are generally too high for the human ear anyway.
 
 // Score values for each zone
@@ -59,19 +57,19 @@ void setup()
   fullScreen(P3D);
   
   // set the song
-  String songPath = "extracting/music/cvet_short.wav";  // cvet_short memories_short technicolour_beat_short breed_short november_rain_short.wav mashup.mp3
+  String songName = "cvet_short.wav"; // set the song name; examples: cvet_short.wav memories_short.wav technicolour_beat_short.wav breed_short.wav november_rain_short.wav
+  String pathToSong = "extracting/music/";
+  String songPath = songName + pathToSong;  
   
   CSV = "extracting/" + split(split(songPath, '.')[0], "/")[2]  + ".csv";
-  //CSV = "extracting/fake.csv"; // temporary
   t = loadTable(CSV, "header");
  
   minim = new Minim(this);
   song = minim.loadFile(songPath);
   fft = new FFT(song.bufferSize(), song.sampleRate());
   
-  // One cube per frequency band
-  nbCubes = 40; //(int)(fft.specSize()*specHi);
-  //print(nbCubes);
+  // Add more cubes
+  nbCubes = 40; // (int)(fft.specSize()*specHi);
   cubes = new Cube[nbCubes];
   
   // As many walls as we want
@@ -125,7 +123,6 @@ void setup()
     rightSquares[i] = new Square(width, random(50, height-250));
   }
   
-  // TODO - background bi se lahko lepo spreminju glede na mood
   //Black background
   background(0);
   
@@ -152,7 +149,7 @@ float drumsTransparency = 0.0;
 
 void draw()
 {
-  // Advance the song. We draw () for each "frame" of the song ...
+  // Advance the song. We draw() for each "frame" of the song ...
   fft.forward(song.mix);
   called++;
   
@@ -171,20 +168,17 @@ void draw()
     currInstrument = row.getString("instrument");
     if (currInstrument.equals(lastInstrument)) {
       sameInstrumentSeconds += 1;
-      //println(sameInstrumentSeconds);
     } else {
       sameInstrumentSeconds = 0;
     }
     currGenre = row.getString("genre");
-    //println(currInstrument);
   }
-  
   
   // exit program when the song stops
   if (!song.isPlaying()) {
     // stop recording
-    print("avg frames: ", (float)called/songLen);
     //videoExport.endMovie();
+    print("Average number of frames: ", (float)called/songLen);
     exit();
   }
   
@@ -193,10 +187,12 @@ void draw()
   oldScoreLow = scoreLow;
   oldScoreMid = scoreMid;
   oldScoreHi = scoreHi;
+  
   // Reset the values
   scoreLow = 0;
   scoreMid = 0;
   scoreHi = 0;
+  
   // Calculate the new "scores"
   for(int i = 0; i < fft.specSize()*specLow; i++)
     scoreLow += fft.getBand(i);
@@ -204,6 +200,7 @@ void draw()
     scoreMid += fft.getBand(i);
   for(int i = (int)(fft.specSize()*specMid); i < fft.specSize()*specHi; i++)
     scoreHi += fft.getBand(i);
+    
   // Slow down the descent.
   if (oldScoreLow - scoreDecreaseRate > scoreLow)
     scoreLow = oldScoreLow - scoreDecreaseRate;
@@ -211,6 +208,7 @@ void draw()
     scoreMid = oldScoreMid - scoreDecreaseRate;
   if (oldScoreHi - scoreDecreaseRate > scoreHi)
     scoreHi = oldScoreHi - scoreDecreaseRate;
+    
   // Volume for all frequencies at this time, with higher sounds more prominent.
   // This allows the animation to go faster for higher pitched sounds, which are more noticeable
   float scoreGlobal = 0.66*scoreLow + 0.8*scoreMid + 1*scoreHi;  // 0-1500 roughly
@@ -230,7 +228,6 @@ void draw()
   {
     // Value of the frequency band
     float bandValue = fft.getBand(i);
-    //println(bandValue);
     
     // The color is represented as: red for bass, green for mid sounds, and blue for highs.
     // The opacity is determined by the volume of the tape and the overall volume.
@@ -258,7 +255,7 @@ void draw()
     // Value of the frequency band, we multiply the bands further away so that they are more visible.
     float bandValue = fft.getBand(i)*(1 + (i/25)); //<>//
 
-    //drawEdges(bandValue*heightMult, i, dist); // TODO try this out!
+    // drawEdges(bandValue*heightMult, i, dist); // TODO try this out!
     
     // draw guitar strings
     if (guitarLineCurr <= dist*i && guitarLineTransparency > 0) {
@@ -299,6 +296,7 @@ void draw()
   } else if (currInstrument.equals("vocal") && vocalTransparency < 1) { // vocals are singing again
     vocalTransparency += 0.025;
   }
+  
   // draw circles
   if (vocalTransparency > 0) {
     for(int i = 0; i < nCircles; i++) {
@@ -360,19 +358,7 @@ void draw()
     }
   }
   //videoExport.saveFrame();
-  //saveFrame(); // TODO to probaj
 }
-
-
-
-
-
-
-
-
-
-
-
 
 void drawEdges(float bandValue, int i, float dist)
 {
