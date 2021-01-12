@@ -18,3 +18,11 @@ if you have a good GPU you can also uncomment line 261 for a special effect :)
 - install requirements listed in requirenments.txt (pip install -r requirements.txt)  
 - change the file_name variable to the name of desired song in line 10 in extract.py
 - run extract.py
+
+## Examples
+Examples are in the examples folder (check out the video ones too!)  
+
+
+![guitar](examples/guitar.JPG)  
+![drums](examples/drums.JPG)  
+![singing](examples/singing.JPG)
