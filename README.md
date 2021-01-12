@@ -10,7 +10,7 @@ if you have a good GPU you can also uncomment line 261 for a special effect :)
 
 ## Running with your music  
 - add a music file of your choice to gen_art/extracting/music/ folder  
-- [generate](#generating) a new CSV file  
+- [generate](#generating-new-csv-files) a new CSV file  
 - change songPath variable to your song in line 62 in gen_art.pde   
 - [run](#running-the-visualization) the visualization  
 
