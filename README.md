@@ -4,14 +4,14 @@ A generative art heavily influenced by the currently played song.
 ## Running the visualization  
 open gen_art.pde and run it (for that you need to download [Processing](https://processing.org/download/))  
 
-for a different song you can change the songPath variable in line 62  
+for a different song you can change the songName variable in line 60  
 
-if you have a good GPU you can also uncomment line 261 for a special effect :)  
+if you have a good GPU you can also uncomment line 258 for a special effect :)  
 
 ## Running with your music  
 - add a music file of your choice to gen_art/extracting/music/ folder  
 - [generate](#generating-new-csv-files) a new CSV file  
-- change songPath variable to your song in line 62 in gen_art.pde   
+- change songPath variable to your song in line 60 in gen_art.pde   
 - [run](#running-the-visualization) the visualization  
 
 ## Generating new CSV files
